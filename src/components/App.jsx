@@ -2,6 +2,7 @@ import Product from "./Product.jsx";
 import Mailbox from './Mailbox.jsx';
 import Book from "./Book.jsx";
 import Alert from "./Alert.jsx";
+import UserMenu from "./UserMenu.jsx";
 
 const messages = ['hola', 'hi', 'adios'];
 
@@ -14,6 +15,8 @@ const booksArr = [
 export default function App() {
   return (
     <div>
+      <h2>User Menu</h2>
+      <UserMenu name = "Anastasiia"/>
       <h2>Alerts</h2>
       <Alert variant="info" outlined={true} >Please update your email!</Alert>
       <Alert variant="error">There was an error during transaction!</Alert>
