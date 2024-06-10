@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "./Modal.jsx";
 
-const ClickCounter = () => {
+const ModalHandler = () => {
   //   const [clicks, setClicks] = useState(0);
 
   //   useEffect(() => {
@@ -23,10 +23,6 @@ const ClickCounter = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("Clicks updated: ");
-  }, []);
-
   return (
     <div>
       <button onClick={() => setIsOpen(!isOpen)}>
@@ -37,4 +33,4 @@ const ClickCounter = () => {
   );
 };
 
-export default ClickCounter;
+export default ModalHandler;
