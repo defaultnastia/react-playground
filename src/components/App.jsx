@@ -22,6 +22,7 @@ import BookList from "../tabs/module_3/BookFilter/BookList.jsx";
 import BookFilter from "../tabs/module_3/BookFilter/BookFilter.jsx";
 import initialBooks from "../tabs/module_3/BookFilter/books.json";
 import { MdSettingsBackupRestore } from "react-icons/md";
+import FeedbackForm from "../tabs/module_3/FeedbackForm.jsx";
 
 const messages = ["hola", "hi", "adios"];
 
@@ -65,6 +66,8 @@ export default function App() {
         </TabList>
 
         <TabPanel>
+          <h2>Feedback Form</h2>
+          <FeedbackForm />
           <h2>Book Filter</h2>
           <div className="bookBox">
             <BookForm addBook={addBook} />
