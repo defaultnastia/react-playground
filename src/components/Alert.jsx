@@ -1,4 +1,4 @@
-import css from "./Alert.module.css"
+import css from "./Alert.module.css";
 import clsx from "clsx";
 
 // const Alert = ({ variant, outlined, elevated, children }) => {
@@ -24,19 +24,15 @@ import clsx from "clsx";
 //   return <p className={classNames}>{children}</p>;
 // };
 
-console.log(css); // { alert: "Alert_alert_ax7yz" }
+// console.log(css); // { alert: "Alert_alert_ax7yz" }
 
-const Alert = ({ variant, children,  outlined, elevated }) => {
-  const classNames = clsx(
-    css[variant],
-    {
-      [css.isOutlined]: outlined,
-      [css.elevated]: elevated}
-  )
-
+const Alert = ({ variant, children, outlined, elevated }) => {
+  const classNames = clsx(css[variant], {
+    [css.isOutlined]: outlined,
+    [css.elevated]: elevated,
+  });
 
   return <p className={classNames}>{children}</p>;
 };
-
 
 export default Alert;
