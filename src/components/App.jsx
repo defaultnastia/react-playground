@@ -13,7 +13,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import SearchBar from "../tabs/module_3/Searchbar.jsx";
 import LangSwitcher from "../tabs/module_3/LangSwitcher.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Radio from "../tabs/module_3/Radio.jsx";
 import Checkbox from "../tabs/module_3/Checkbox.jsx";
 import ControlledForm from "../tabs/module_3/ControlledForm.jsx";
@@ -21,8 +21,10 @@ import BookForm from "../tabs/module_3/BookFilter/BookForm.jsx";
 import BookList from "../tabs/module_3/BookFilter/BookList.jsx";
 import BookFilter from "../tabs/module_3/BookFilter/BookFilter.jsx";
 import initialBooks from "../tabs/module_3/BookFilter/books.json";
-import { MdSettingsBackupRestore } from "react-icons/md";
 import FeedbackForm from "../tabs/module_3/FeedbackForm.jsx";
+import NewsPage from "../tabs/module_4/NewsPage.jsx";
+import { fetchArticlesWithTopic } from "../api/articles-api.js";
+import ArticleSearchForm from "../tabs/module_4/ArticleSearchForm.jsx";
 
 const messages = ["hola", "hi", "adios"];
 
@@ -57,14 +59,43 @@ export default function App() {
     book.text.toLowerCase().includes(filter.toLowerCase())
   );
 
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        setLoading(true);
+        const data = await fetchArticlesWithTopic("react");
+        setArticles(data);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchArticles();
+  }, []);
+
   return (
     <>
       <Tabs>
         <TabList>
+          <Tab>Module 4</Tab>
           <Tab>Module 3</Tab>
           <Tab>Module 1-2</Tab>
         </TabList>
-
+        <TabPanel>
+          <h2>News Page</h2>
+          <ArticleSearchForm />
+          {loading && <p>Loading, please wait...</p>}
+          {error && (
+            <p>Whoops, something went wrong! Please try reloading this page!</p>
+          )}
+          {articles.length > 0 && <NewsPage articles={articles} />}
+        </TabPanel>
         <TabPanel>
           <h2>Feedback Form</h2>
           <FeedbackForm />
