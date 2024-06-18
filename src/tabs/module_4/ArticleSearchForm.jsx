@@ -1,19 +1,22 @@
 import { Form, Formik, Field } from "formik";
 
-const initialValues = { articleSearch: "" };
+const initialValues = { topic: "" };
 
-const ArticleSearchForm = ({ onSearch }) => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    console.log(event);
-    form.reset();
+const ArticleSearchForm = ({ handleSearch }) => {
+  const handleSubmit = (values, actions) => {
+    if (!values.topic) {
+      alert("please enter topic");
+      return;
+    }
+    handleSearch(values.topic);
+    console.log(values);
+    actions.resetForm();
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
-        <Field name="articleSearch" placeholder="Search articles..."></Field>
+        <Field name="topic" placeholder="Search articles..."></Field>
         <button type="submit">Submit</button>
       </Form>
     </Formik>

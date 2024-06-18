@@ -25,6 +25,11 @@ import FeedbackForm from "../tabs/module_3/FeedbackForm.jsx";
 import NewsPage from "../tabs/module_4/NewsPage.jsx";
 import { fetchArticlesWithTopic } from "../api/articles-api.js";
 import ArticleSearchForm from "../tabs/module_4/ArticleSearchForm.jsx";
+import Planets from "../tabs/module_4/Planets";
+import VideoPlayer from "../tabs/module_4/VideoPlayer.jsx";
+import ToggleModalA from "../tabs/module_4/ToggleModalA.jsx";
+import ToggleModalB from "../tabs/module_4/ToggleModalB.jsx";
+import UserLogMenu from "../tabs/module_4/UserLogMenu.jsx";
 
 const messages = ["hola", "hi", "adios"];
 
@@ -63,21 +68,36 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        setLoading(true);
-        const data = await fetchArticlesWithTopic("react");
-        setArticles(data);
-      } catch (error) {
-        console.log(error);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
+  // useEffect(() => {
+  //   async function fetchArticles() {
+  //     try {
+  //       setLoading(true);
+  //       const data = await fetchArticlesWithTopic("react");
+  //       setArticles(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setError(true);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchArticles();
+  // }, []);
+
+  const handleSearch = async (topic) => {
+    try {
+      setArticles([]);
+      setError(false);
+      setLoading(true);
+      const data = await fetchArticlesWithTopic(topic);
+      setArticles(data);
+    } catch (error) {
+      setError(true);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    fetchArticles();
-  }, []);
+  };
 
   return (
     <>
@@ -88,8 +108,17 @@ export default function App() {
           <Tab>Module 1-2</Tab>
         </TabList>
         <TabPanel>
+          <h2>User Menu</h2>
+          <UserLogMenu />
+          <h2>Toggle Modals</h2>
+          <ToggleModalA />
+          <ToggleModalB />
+          <h2>VideoPlayer</h2>
+          <VideoPlayer source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+          <h2>Planets</h2>
+          <Planets />
           <h2>News Page</h2>
-          <ArticleSearchForm />
+          <ArticleSearchForm handleSearch={handleSearch} />
           {loading && <p>Loading, please wait...</p>}
           {error && (
             <p>Whoops, something went wrong! Please try reloading this page!</p>
